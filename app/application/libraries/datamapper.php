@@ -6530,7 +6530,7 @@ class DataMapper implements IteratorAggregate {
 		{
 			// make sure these exists to not trip __get()
 			$this->load = NULL;
-			$this->config = NULL;
+			@$this->config = NULL;
 			$this->lang = NULL;
 
 			// access to the loader
