@@ -1603,14 +1603,7 @@ META;
 			$attributes['data-koken-share'] = $options['share'];
 			$share_parameters = array();
 
-			if ($options['share'] === 'google-plus')
-			{
-				$label = 'Google+';
-			}
-			else
-			{
-				$label = ucwords($options['share']);
-			}
+            $label = ucwords($options['share']);
 
 			$token = self::$current_token;
 
