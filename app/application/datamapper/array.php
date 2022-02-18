@@ -129,7 +129,7 @@ class DMZ_Array {
 					// Store $has_one relationships
 					$c = get_class($object->{$f});
 					$rel = new $c();
-					$id = isset($data[$f]) ? $data[$f] : 0;
+					$id = $data[$f] ?? 0;
 					$rel->get_by_id($id);
 					if($rel->exists())
 					{
@@ -147,7 +147,7 @@ class DMZ_Array {
 					// Store $has_many relationships
 					$c = get_class($object->{$f});
 					$rels = new $c();
-					$ids = isset($data[$f]) ? $data[$f] : FALSE;
+					$ids = $data[$f] ?? FALSE;
 					if(empty($ids))
 					{
 						// if no IDs were provided, delete all old relationships.
@@ -167,15 +167,7 @@ class DMZ_Array {
 				else
 				{
 					// Otherwise, if the $data was set, store it...
-					if(isset($data[$f]))
-					{
-						$v = $data[$f];
-					}
-					else
-					{
-						// Or assume it was an unchecked checkbox, and clear it.
-						$v = FALSE;
-					}
+                    $v = $data[$f] ?? FALSE;
 					$object->{$f} = $v;
 				}
 			}

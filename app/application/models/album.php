@@ -1047,7 +1047,7 @@ Q;
 
 		foreach($data as $album)
 		{
-			$tags = isset($tag_map['c' . $album->id]) ? $tag_map['c' . $album->id] : array();
+			$tags = $tag_map['c' . $album->id] ?? array();
 			$params['eager_tags'] = $tags;
 			$params['include_parent'] = !$sub_list;
 			$final['albums'][] = $album->to_array($params);
@@ -1491,7 +1491,7 @@ Q;
 			$data['parent'] = false;
 		}
 
-		$cat = isset($options['category']) ? $options['category'] : (isset($options['context']) && strpos($options['context'], 'category-') === 0 ? str_replace('category-', '', $options['context']) : false);
+		$cat = $options['category'] ?? (isset($options['context']) && strpos($options['context'], 'category-') === 0 ? str_replace('category-', '', $options['context']) : false);
 
 		if ($cat)
 		{
@@ -1511,7 +1511,7 @@ Q;
 		$data['url'] = $this->url(
 			array(
 				'date' => $data['published_on'],
-				'tag' => isset($options['tags']) ? $options['tags'] : (isset($options['context']) && strpos($options['context'], 'tag-') === 0 ? str_replace('tag-', '', $options['context']) : false),
+				'tag' => $options['tags'] ?? (isset($options['context']) && strpos($options['context'], 'tag-') === 0 ? str_replace('tag-', '', $options['context']) : false),
 				'category' => $cat,
 			)
 		);

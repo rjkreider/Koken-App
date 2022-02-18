@@ -423,7 +423,7 @@ class Content extends Koken {
 					unlink($midsize);
 				}
 
-				$orientation = isset($exif['IFD0']['Orientation']) ? $exif['IFD0']['Orientation'] : false;
+				$orientation = $exif['IFD0']['Orientation'] ?? false;
 
 				if (in_array($orientation, array(3, 6, 8), true))
 				{
@@ -808,8 +808,8 @@ class Content extends Koken {
 
 	function to_array($options = array())
 	{
-		$options['auth'] = isset($options['auth']) ? $options['auth'] : false;
-		$options['in_album'] = isset($options['in_album']) ? $options['in_album'] : false;
+		$options['auth'] = $options['auth'] ?? false;
+		$options['in_album'] = $options['in_album'] ?? false;
 
 		$exclude = array('storage_url', 'storage_url_midsize', 'deleted', 'featured_order', 'favorite_order', 'old_slug', 'has_exif', 'has_iptc', 'tags_old');
 		$bools = array('featured', 'favorite');
@@ -1220,7 +1220,7 @@ class Content extends Koken {
 		else
 		{
 
-			$cat = isset($options['category']) ? $options['category'] : (isset($options['context']) && strpos($options['context'], 'category-') === 0 ? str_replace('category-', '', $options['context']) : false);
+			$cat = $options['category'] ?? (isset($options['context']) && strpos($options['context'], 'category-') === 0 ? str_replace('category-', '', $options['context']) : false);
 
 			if ($cat)
 			{
@@ -1239,7 +1239,7 @@ class Content extends Koken {
 			$data['url'] = $this->url(array(
 				'date' => $data['published_on'],
 				'album' => $options['in_album'],
-				'tag' => isset($options['tags']) ? $options['tags'] : (isset($options['context']) && strpos($options['context'], 'tag-') === 0 ? str_replace('tag-', '', $options['context']) : false),
+				'tag' => $options['tags'] ?? (isset($options['context']) && strpos($options['context'], 'tag-') === 0 ? str_replace('tag-', '', $options['context']) : false),
 				'category' => $cat,
 				'favorite' => isset($options['favorite']) || (isset($options['context']) && $options['context'] === 'favorites') ? true : false,
 				'feature' => isset($options['featured']) || (isset($options['context']) && $options['context'] === 'features') ? true : false,
@@ -2152,7 +2152,7 @@ class Content extends Koken {
 
 		foreach($data as $content)
 		{
-			$tags = isset($tag_map['c' . $content->id]) ? $tag_map['c' . $content->id] : array();
+			$tags = $tag_map['c' . $content->id] ?? array();
 			$options['eager_tags'] = $tags;
 			$final['content'][] = $content->to_array($options);
 		}

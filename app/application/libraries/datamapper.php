@@ -601,9 +601,7 @@ class DataMapper implements IteratorAggregate {
 			{
 				// Localize label if necessary
 				$val['label'] = $this->localize_label($field,
-						isset($val['label']) ?
-							$val['label'] :
-							FALSE);
+                    $val['label'] ?? FALSE);
 			}
 			unset($validation);
 		}
@@ -842,7 +840,8 @@ class DataMapper implements IteratorAggregate {
 				else
 				{
 					$file = APPPATH . $name . EXT;
-					$ext = array_pop(explode('/', $name));
+                    $array = explode('/', $name);
+                    $ext = array_pop($array);
 				}
 
 				if(!file_exists($file))
@@ -879,11 +878,11 @@ class DataMapper implements IteratorAggregate {
 			// create class
 			if(is_null($options))
 			{
-				$o = new $ext(NULL, isset($this) ? $this : NULL);
+				$o = new $ext(NULL, $this ?? NULL);
 			}
 			else
 			{
-				$o = new $ext($options, isset($this) ? $this : NULL);
+				$o = new $ext($options, $this ?? NULL);
 			}
 			$extensions[$name] = $o;
 
@@ -1252,11 +1251,7 @@ class DataMapper implements IteratorAggregate {
 	 * @return	Iterator An iterator for the all array
 	 */
 	public function getIterator() {
-		if(isset($this->_dm_dataset_iterator)) {
-			return $this->_dm_dataset_iterator;
-		} else {
-			return new ArrayIterator($this->all);
-		}
+        return $this->_dm_dataset_iterator ?? new ArrayIterator($this->all);
 	}
 
 	// --------------------------------------------------------------------

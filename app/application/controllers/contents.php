@@ -158,8 +158,8 @@ class Contents extends Koken_Controller {
 
 						$file_name = $c->clean_filename($_REQUEST['name']);
 
-						$chunk = isset($_REQUEST["chunk"]) ? $_REQUEST["chunk"] : 0;
-						$chunks = isset($_REQUEST["chunks"]) ? $_REQUEST["chunks"] : 0;
+						$chunk = $_REQUEST["chunk"] ?? 0;
+						$chunks = $_REQUEST["chunks"] ?? 0;
 
 						$tmp_dir = FCPATH . 'storage' . DIRECTORY_SEPARATOR . 'tmp';
 						$tmp_path = $tmp_dir . DIRECTORY_SEPARATOR . $file_name;
@@ -209,14 +209,7 @@ class Contents extends Koken_Controller {
 						{
 							$contentType = $_SERVER["HTTP_CONTENT_TYPE"];
 						}
-						else if (isset($_SERVER["CONTENT_TYPE"]))
-						{
-							$contentType = $_SERVER["CONTENT_TYPE"];
-						}
-						else
-						{
-							$contentType = '';
-						}
+						else $contentType = $_SERVER["CONTENT_TYPE"] ?? '';
 
 						if (strpos($contentType, "multipart") !== false) {
 							if (isset($_FILES['file']['tmp_name']) && is_uploaded_file($_FILES['file']['tmp_name']))
@@ -468,7 +461,7 @@ class Contents extends Koken_Controller {
 						}
 					}
 
-					$from = Shutter::filter("api.$hook", array_merge($from, array('id' => $id, 'file' => isset($path) ? $path : $c->path_to_original() )));
+					$from = Shutter::filter("api.$hook", array_merge($from, array('id' => $id, 'file' => $path ?? $c->path_to_original())));
 
 					unset($from['file']);
 
@@ -899,7 +892,7 @@ class Contents extends Koken_Controller {
 							$prev->where('featured', 1);
 							$final['context']['type'] = 'feature';
 							$final['context']['title'] = 'language.features';
-							$final['context']['__koken_url'] = isset($urls['features']) ? $urls['features'] : false;
+							$final['context']['__koken_url'] = $urls['features'] ?? false;
 
 							if ($final['context']['__koken_url'])
 							{

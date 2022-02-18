@@ -123,7 +123,7 @@ class CI_Cart {
 		if ($save_cart == TRUE)
 		{
 			$this->_save_cart();
-			return isset($rowid) ? $rowid : TRUE;
+			return $rowid ?? TRUE;
 		}
 
 		return FALSE;
